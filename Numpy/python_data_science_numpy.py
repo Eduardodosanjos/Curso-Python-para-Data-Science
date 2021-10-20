@@ -603,9 +603,11 @@ for <variável> in <coleção>:
 ### Loops com listas
 """
 
+Acessorios = ['Rodas de liga', 'Travas elétricas', 'Piloto automático', 'Bancos de couro', 'Ar condicionado', 'Sensor de estacionamento', 'Sensor crepuscular', 'Sensor de chuva']
+Acessorios
 
-
-
+for item in Acessorios:
+  print(item)
 
 """###  List comprehensions
 
@@ -614,19 +616,20 @@ https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions
 *range()* -> https://docs.python.org/3.6/library/functions.html#func-range
 """
 
+range(10)
 
+list(range(10))
 
+for i in range(10):
+  print(i ** 2)
 
+quadrado = []
+for i in range(10):
+  quadrado.append(i ** 2)
 
+quadrado
 
-
-
-
-
-
-
-
-
+[i ** 2 for i in range(10)]
 
 """# 4.2 Loops aninhados"""
 
@@ -637,11 +640,19 @@ dados = [
 ]
 dados
 
+for lista in dados:
+  print(lista)
 
+for lista in dados:
+  for item in lista:
+    print(item)
 
+Acessorios = []
+for lista in dados:
+  for item in lista:
+    Acessorios.append(item)
 
-
-
+Acessorios
 
 """## *set()*
 
@@ -650,11 +661,13 @@ https://docs.python.org/3.6/library/stdtypes.html#types-set
 https://docs.python.org/3.6/library/functions.html#func-set
 """
 
-
+list(set(Acessorios))
 
 """### List comprehensions"""
 
+[item for lista in dados for item in lista]
 
+list(set([item for lista in dados for item in lista]))
 
 """# 4.3 Instrução *if*
 
@@ -688,13 +701,23 @@ dados = [
 ]
 dados
 
+zero_km_y = []
+for lista in dados:
+  if lista[2] == True:
+    zero_km_y.append(lista)
 
+zero_km_y
 
+zero_km_n = []
+for lista in dados:
+  if lista[2] == False:
+    zero_km_n.append(lista)
 
+zero_km_n
 
 """### List comprehensions"""
 
-
+[lista for lista in dados if lista[2] == True]
 
 """# 4.4 Instruções *if-else* e *if-elif-else*
 
@@ -708,11 +731,16 @@ else:
 ```
 """
 
+zero_km_y, zero_km_n = [], []
+for lista in dados:
+  if lista[2] == True:
+    zero_km_y.append(lista)
+  else:
+    zero_km_n.append(lista)
 
+zero_km_y
 
-
-
-
+zero_km_n
 
 """#### Formato padrão
 
@@ -731,7 +759,7 @@ else:
 ```
 """
 
-
+dados
 
 print('AND')
 print(f'(True and True) o resultado é: {True and True}')
@@ -745,15 +773,31 @@ print(f'(True or False) o resultado é: {True or False}')
 print(f'(False or True) o resultado é: {False or True}')
 print(f'(False or False) o resultado é: {False or False}')
 
+A, B, C = [], [], []
 
+for lista in dados:
+  if lista[1] <= 2000:
+    A.append(lista)
+  elif lista[1] > 2000 and lista[1] <= 2010:
+    B.append(lista)
+  else:
+    C.append(lista)
 
+A
 
+B
 
+C
 
+A, B, C = [], [], []
 
-
-
-
+for lista in dados:
+  if lista[1] <= 2000:
+    A.append(lista)
+  elif 2000 < lista[1] <= 2010:
+    B.append(lista)
+  else:
+    C.append(lista)
 
 """# <font color=green> 5. NUMPY BÁSICO
 ---
@@ -788,53 +832,51 @@ Alguns pacotes não são distribuídos com a instalação default do Python. Nes
 ### Importando todo o pacote
 """
 
-
+import numpy
 
 """https://numpy.org/doc/1.16/reference/generated/numpy.arange.html"""
 
-
+numpy.arange(10)
 
 """### Importando todo o pacote e atribuindo um novo nome """
 
+import numpy as np
 
-
-
+np.arange(10)
 
 """### Importando parte do pacote"""
 
+from numpy import arange
 
+arange(10)
 
+"""# 5.1 Criando arrays Numpy
 
-
-"""# 5.1 Criando arrays Numpy"""
-
-
-
-"""### A partir de listas
+### A partir de listas
 
 https://numpy.org/doc/1.16/user/basics.creation.html
 """
 
+km = np.array([1000, 2300, 4987, 1500])
 
+km
 
-
-
-
+type(km)
 
 """https://numpy.org/doc/1.16/user/basics.types.html"""
 
-
+km.dtype
 
 """### A partir de dados externos
 
 https://numpy.org/doc/1.16/reference/generated/numpy.loadtxt.html
 """
 
+km = np.loadtxt(fname= 'carros-km.txt', dtype = int)
 
+km
 
-
-
-
+km.dtype
 
 """### Arrays com duas dimensões"""
 
@@ -845,23 +887,25 @@ dados = [
 ]
 dados
 
+Acessorios = np.array(dados)
 
+Acessorios
 
+km.shape
 
-
-
-
-
+Acessorios.shape
 
 """### Comparando desempenho com listas"""
 
+np_array = np.arange(1000000)
 
+py_list = list(range(1000000))
 
+# Commented out IPython magic to ensure Python compatibility.
+# %time for _ in range(100): np_array *= 2
 
-
-
-
-
+# Commented out IPython magic to ensure Python compatibility.
+# %time for _ in range(100): py_list = [x * 2 for x in py_list]
 
 """# 5.2 Operações aritméticas com arrays Numpy
 
@@ -871,45 +915,45 @@ dados
 km = [44410., 5712., 37123., 0., 25757.]
 anos = [2003, 1991, 1990, 2019, 2006]
 
-
+# idade = 2021 - anos
 
 km = np.array([44410., 5712., 37123., 0., 25757.])
 anos = np.array([2003, 1991, 1990, 2019, 2006])
 
+idade = 2021 - anos
 
-
-
+idade
 
 """### Operações entre arrays"""
 
+km_media = km / idade
 
-
-
-
-
+km_media
 
 """### Operações com arrays de duas dimensões"""
 
+dados = np.array([km,anos])
 
+dados
 
-
-
-
+dados.shape
 
 """![1410-img01.png](https://caelum-online-public.s3.amazonaws.com/1410-pythondatascience/01/1410-img01.png)"""
 
+dados[0]
 
+dados[1]
 
+km_media = dados[0] / (2021 - dados[1])
 
-
-
+km_media
 
 """# 5.3 Seleções com arrays Numpy
 
 ![1410-img01.png](https://caelum-online-public.s3.amazonaws.com/1410-pythondatascience/01/1410-img01.png)
 """
 
-
+dados
 
 """![1410-img02.png](https://caelum-online-public.s3.amazonaws.com/1410-pythondatascience/01/1410-img02.png)
 
@@ -918,25 +962,28 @@ anos = np.array([2003, 1991, 1990, 2019, 2006])
 <font color=red>**Observação:**</font> A indexação tem origem no zero.
 """
 
+contador = np.arange(10)
+contador
 
+contador[0]
 
+item = 6
+index = item - 1
+contador[index]
 
+contador[-1]
 
+dados[0]
 
-
-
-
-
-
-
+dados[1]
 
 """## <font color=green>**Dica:**</font>
 ### *ndarray[ linha ][ coluna ]* ou *ndarray[ linha, coluna ]*
 """
 
+dados[1][2]
 
-
-
+dados[1,2]
 
 """### Fatiamentos
  
@@ -947,42 +994,45 @@ A sintaxe para realizar fatiamento em um array Numpy é $i : j : k$ onde $i$ é 
 ![1410-img01.png](https://caelum-online-public.s3.amazonaws.com/1410-pythondatascience/01/1410-img01.png)
 """
 
+contador = np.arange(10)
+contador
 
+contador[1:4]
 
+contador[1:8:2]
 
+contador[::2]
 
+contador[1::2]
 
+dados
 
+dados[:, 1:3]
 
+dados[:, 1:3][0] / (2021 - dados[:, 1:3][1])
 
-
-
-
-
-
-
-
-
-
+dados[0] / (2021 - dados[1])
 
 """### Indexação com array booleano
 
 <font color=red>**Observação:**</font> Seleciona um grupo de linhas e colunas segundo os rótulos ou um array booleano.
 """
 
+contador = np.arange(10)
+contador
 
+contador > 5
 
+contador[contador > 5]
 
+contador[[False, False, False, False, False, False,  True,  True,  True,
+        True]]
 
+dados
 
+dados[1] > 2000
 
-
-
-
-
-
-
-
+dados[: , dados[1] > 2000]
 
 """# 5.4 Atributos e métodos de arrays Numpy
 
@@ -991,44 +1041,44 @@ A sintaxe para realizar fatiamento em um array Numpy é $i : j : k$ onde $i$ é 
 https://numpy.org/doc/1.16/reference/arrays.ndarray.html#array-attributes
 """
 
-
+dados
 
 """## *ndarray.shape*
 
 Retorna uma tupla com as dimensões do array.
 """
 
-
+dados.shape
 
 """## *ndarray.ndim*
 
 Retorna o número de dimensões do array.
 """
 
-
+dados.ndim
 
 """## *ndarray.size*
 
 Retorna o número de elementos do array.
 """
 
-
+dados.size
 
 """## *ndarray.dtype*
 
 Retorna o tipo de dados dos elementos do array.
 """
 
-
+dados.dtype
 
 """## *ndarray.T*
 
 Retorna o array transposto, isto é, converte linhas em colunas e vice versa.
 """
 
+dados.T
 
-
-
+dados.transpose()
 
 """### Métodos
 
@@ -1039,44 +1089,47 @@ https://numpy.org/doc/1.16/reference/arrays.ndarray.html#array-methods
 Retorna o array como uma lista Python.
 """
 
-
+dados.tolist()
 
 """## *ndarray.reshape(shape[, order])*
 
 Retorna um array que contém os mesmos dados com uma nova forma.
 """
 
+contador = np.arange(10)
+contador
 
+contador.reshape((5,2))
 
+contador.reshape((5,2), order='C')
 
-
-
-
-
+contador.reshape((5,2), order='F')
 
 km = [44410, 5712, 37123, 0, 25757]
 anos = [2003, 1991, 1990, 2019, 2006]
 
+info_carros = km + anos
+info_carros
 
+np.array(info_carros).reshape((2,5))
 
-
-
-
+np.array(info_carros).reshape((5,2), order='F')
 
 """## *ndarray.resize(new_shape[, refcheck])*
 
 Altera a forma e o tamanho do array.
 """
 
+dados_new = dados.copy()
+dados_new
 
+dados_new.resize((3,5), refcheck=False)
 
+dados_new
 
+dados_new[2] = dados_new[0] / (2021 - dados_new[1])
 
-
-
-
-
-
+dados_new
 
 """# 5.5 Estatísticas com arrays Numpy
 
@@ -1095,49 +1148,50 @@ anos = np.loadtxt(fname = "carros-anos.txt", dtype = int)
 km = np.loadtxt(fname = "carros-km.txt")
 valor = np.loadtxt(fname = "carros-valor.txt")
 
-
+anos.shape
 
 """https://numpy.org/doc/1.16/reference/generated/numpy.column_stack.html"""
 
+dataset = np.column_stack((anos, km, valor))
+dataset
 
-
-
+dataset.shape
 
 """## *np.mean()*
 
 Retorna a média dos elementos do array ao longo do eixo especificado.
 """
 
+np.mean(dataset, axis = 0)
 
+np.mean(dataset, axis = 1)
 
+np.mean(dataset[: , 1])
 
-
-
-
-
+np.mean(dataset[: , 2])
 
 """## *np.std()*
 
 Retorna o desvio padrão dos elementos do array ao longo do eixo especificado.
 """
 
-
+np.std(dataset[: , 2])
 
 """## *ndarray.sum()*
 
 Retorna a soma dos elementos do array ao longo do eixo especificado.
 """
 
+dataset.sum(axis=0)
 
-
-
+dataset[: , 1].sum()
 
 """## *np.sum()*
 
 Retorna a soma dos elementos do array ao longo do eixo especificado.
 """
 
+np.sum(dataset, axis=0)
 
-
-
+np.sum(dataset[: , 2])
 
